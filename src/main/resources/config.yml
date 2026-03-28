@@ -1,0 +1,35 @@
+version: 1 # config version
+debug: false # enable more logging
+
+# Fine system for killing mobs
+fines:
+  settings:
+    show-message-in: ACTIONBAR # message display method: CHAT or ACTIONBAR
+    default-name: Entity # default name for mobs not listed
+    default-fine: 99.0 # default fine amount
+    enable-default: true # whether to apply default fine to mobs not in the list
+  # List of mobs and fine amounts
+  mobs:
+    CREEPER:
+      name: Creeper # displayed mob name
+      fine: 32.0 # fine amount
+      enable: true # whether the fine is enabled for this mob
+    # Add other mobs similarly:
+    # ZOMBIE:
+    #   name: Zombie
+    #   fine: 10.0
+    #   enable: true
+    # SKELETON:
+    #   name: Skeleton
+    #   fine: 15.0
+    #   enable: true
+
+# Plugin messages
+messages:
+  fine:
+    success: "§aYou killed §e{0} §aand were fined §a{1}$" # {0} - mob name, {1} - fine amount
+  commands:
+    no-permissions: "§cYou don't have enough permissions to use this command."
+    no-args: "§cThere are not enough arguments in the command"
+    unknown-command: "§cUnknown command"
+    plugin-success-reload: "§aThe plugin has been successfully reloaded"

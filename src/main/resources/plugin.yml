@@ -1,0 +1,21 @@
+name: ${project.name}
+description: ${project.description}
+author: ${plugin.author}
+main: ${plugin.main-class}
+license: MIT
+version: ${project.version}
+api-version: 1.13
+depend: [ Vault ]
+commands:
+  killingmobfine:
+    description: Main plugin command
+    aliases: [ kmf ]
+    usage: /<command> [reload]
+    permission: kmf.reload
+permissions:
+  kmf.bypass:
+    description: Prevents fines when killing mobs
+    default: op
+  kmf.reload:
+    description: Allows reloading the plugin configuration
+    default: op
