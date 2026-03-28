@@ -1,6 +1,7 @@
 package ru.kredwi.kmf.events;
 
 import lombok.AllArgsConstructor;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,7 +59,12 @@ public class KillingEvent implements Listener {
             return;
         }
 
-        dependencies.getEconomy().withdrawPlayer(killer, mob.getFine());
+        EconomyResponse resp = dependencies.getEconomy().withdrawPlayer(killer, mob.getFine());
+        if (resp.type == EconomyResponse.ResponseType.FAILURE) {
+            // TODO: bad_write_off
+            return;
+        }
+
         String message = dependencies.getConfig().getString(MSG_FINE_SUCCESS);
         if (message == null) {
             dependencies.getLogger().severe("Config key with name " + MSG_FINE_SUCCESS + " is not found");
