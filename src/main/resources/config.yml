@@ -8,6 +8,12 @@ fines:
     default-name: Entity # default name for mobs not listed
     default-fine: 99.0 # default fine amount
     enable-default: true # whether to apply default fine to mobs not in the list
+  # Section with penalties if the money could not be debited
+  punishment:
+    enable: true # Enabling punishments
+    type: KICK # Type of punishment (current only KICK)
+    # The message that will be indicated in the reason for the punishment
+    message: "§aCouldn't debit money from account"
   # List of mobs and fine amounts
   mobs:
     CREEPER:

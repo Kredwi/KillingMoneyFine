@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.NotNull;
 import ru.kredwi.kmf.Mob;
+import ru.kredwi.kmf.punishment.PunishmentType;
 
 import java.text.MessageFormat;
 
@@ -17,6 +18,8 @@ import java.text.MessageFormat;
 public class KillingEvent implements Listener {
 
     private static final String MSG_FINE_SUCCESS = "messages.fine.success";
+    private static final String MSG_PUNISHMENT_TYPE = "fines.punishment.type";
+    private static final String ENABLE_PUNISHMENT = "fines.punishment.enable";
     private static final String PERM_PLAYER_BYPASS = "kmf.bypass";
 
     @NotNull
@@ -47,6 +50,7 @@ public class KillingEvent implements Listener {
             return;
         }
 
+
         if (killer.hasPermission(PERM_PLAYER_BYPASS)) {
             debug("Player have bypass permission. Skip.");
             return;
@@ -61,7 +65,12 @@ public class KillingEvent implements Listener {
 
         EconomyResponse resp = dependencies.getEconomy().withdrawPlayer(killer, mob.getFine());
         if (resp.type == EconomyResponse.ResponseType.FAILURE) {
-            // TODO: bad_write_off
+            if (!dependencies.getConfig().getBoolean(ENABLE_PUNISHMENT))
+                return;
+            String punishmentKey = dependencies.getConfig().getString(MSG_PUNISHMENT_TYPE);
+            PunishmentType.execute(punishmentKey == null
+                    ? MSG_PUNISHMENT_TYPE
+                    : punishmentKey, dependencies.getConfig(), killer);
             return;
         }
 
@@ -70,7 +79,6 @@ public class KillingEvent implements Listener {
             dependencies.getLogger().severe("Config key with name " + MSG_FINE_SUCCESS + " is not found");
             return;
         }
-
         dependencies.getMessageWrapper()
                 .sendMessage(killer, MessageFormat
                         .format(message, mob.getDisplayName(), mob.getFine()));
