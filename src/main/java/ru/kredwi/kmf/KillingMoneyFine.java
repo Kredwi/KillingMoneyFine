@@ -6,6 +6,7 @@ import lombok.val;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -60,12 +61,17 @@ public class KillingMoneyFine extends JavaPlugin {
         ), this);
 
         Optional.ofNullable(getCommand("killingmobfine"))
-                .ifPresent((command) -> command.setExecutor(new ReloadCommand(
-                        configSection,
-                        rewardKillManager,
-                        ked,
-                        this
-                )));
+                .ifPresent((command) -> {
+                    ReloadCommand commandExecutor = new ReloadCommand(
+                            configSection,
+                            rewardKillManager,
+                            ked,
+                            this
+                    );
+
+                    command.setExecutor(commandExecutor);
+                    command.setTabCompleter(commandExecutor);
+                });
     }
 
     @Override

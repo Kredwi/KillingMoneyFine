@@ -57,6 +57,13 @@ public class KillingEvent implements Listener {
         }
 
         Mob mob = dependencies.getRewardKillManager().getMob(e.getEntityType());
+        if (mob == null) {
+            dependencies.getLogger().severe(
+                    String.format("Mob with entity id %s is not found (default mob is disable)",
+                    e.getEntityType().name())
+            );
+            return;
+        }
         if (mob.getFine() == -1D) {
             debug(String.format("fine for entity %s is not found (fine == -1D)",
                     e.getEntityType().name()));
