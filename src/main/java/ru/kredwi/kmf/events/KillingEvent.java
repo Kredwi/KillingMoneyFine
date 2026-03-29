@@ -58,7 +58,8 @@ public class KillingEvent implements Listener {
 
         Mob mob = dependencies.getRewardKillManager().getMob(e.getEntityType());
         if (mob == null) {
-            dependencies.getLogger().severe(
+            if (dependencies.getConfig().getBoolean("debug"))
+                dependencies.getLogger().severe(
                     String.format("Mob with entity id %s is not found (default mob is disable)",
                     e.getEntityType().name())
             );
