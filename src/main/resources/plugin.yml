@@ -2,7 +2,7 @@ name: ${project.name}
 description: ${project.description}
 author: ${plugin.author}
 main: ${plugin.main-class}
-license: MIT
+license: Apache-2.0
 version: ${project.version}
 api-version: 1.13
 depend: [ Vault ]
